@@ -1,0 +1,47 @@
+def caesar_cipher(text, shift, mode='encrypt'):
+    """Шифрует или дешифрует текст."""
+    result = []
+    for char in text:
+        if char.isalpha():  # Работаем только с буквами
+            is_upper = char.isupper()
+            char_code = ord(char.lower())
+            
+            # Определяем сдвиг
+            if mode == 'encrypt':
+                new_code = (char_code - ord('a') + shift) % 26 + ord('a')
+            elif mode == 'decrypt':
+                new_code = (char_code - ord('a') - shift) % 26 + ord('a')
+            
+            new_char = chr(new_code)
+            result.append(new_char.upper() if is_upper else new_char)
+        else:
+            result.append(char)  # Не буквы оставляем как есть
+    return ''.join(result)
+
+def main():
+    print("🔐 Шифратор/Дешифратор Цезаря")
+    while True:
+        print("\n1. Зашифровать\n2. Расшифровать\n3. Выйти")
+        choice = input("Выберите действие: ")
+        
+        if choice == '1':
+            text = input("Введите текст: ")
+            shift = int(input("Введите ключ (число): "))
+            encrypted = caesar_cipher(text, shift, mode='encrypt')
+            print("🔒 Зашифрованный текст:", encrypted)
+        
+        elif choice == '2':
+            text = input("Введите зашифрованный текст: ")
+            shift = int(input("Введите ключ (число): "))
+            decrypted = caesar_cipher(text, shift, mode='decrypt')
+            print("🔓 Расшифрованный текст:", decrypted)
+        
+        elif choice == '3':
+            print("До свидания.")
+            break
+        
+        else:
+            print("Ошибка: выберите 1, 2 или 3.")
+
+if __name__ == "__main__":
+    main()
